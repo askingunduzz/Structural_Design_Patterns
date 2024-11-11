@@ -1,103 +1,83 @@
-// Step 1: Define the Target Interface (Expected Language Output)
-interface EnglishSpeaker {
-    void speakEnglish(String message);
+interface EngKonus {
+    void speakEng(String sozler);
 }
 
-// Step 2: Implement the Adaptee (Speakers with Different Languages)
-
-// French Speaker
-class FrenchSpeaker {
-    public void speakFrench(String message) {
-        System.out.println("French Speaker: " + message);
+class FranKonus {
+    public void speakFran(String sozler) {
+        System.out.println("Fran Konus: " + sozler);
     }
 }
 
-// Spanish Speaker
-class SpanishSpeaker {
-    public void speakSpanish(String message) {
-        System.out.println("Spanish Speaker: " + message);
+class IspKonus {
+    public void speakIsp(String sozler) {
+        System.out.println("Isp Konus: " + sozler);
     }
 }
 
-// Step 3: Create the Adapter Classes (Translators)
-// Adapter for French Speaker
-class FrenchToEnglishAdapter implements EnglishSpeaker {
-    private FrenchSpeaker frenchSpeaker;
-
-    public FrenchToEnglishAdapter(FrenchSpeaker frenchSpeaker) {
-        this.frenchSpeaker = frenchSpeaker;
+class FranToEngCevir implements EngKonus {
+    public FranToEngCevir(FranKonus FranKonus) {
     }
 
-    @Override
-    public void speakEnglish(String message) {
-        // Translate from French to English
-        String translatedMessage = translateFrenchToEnglish(message);
-        System.out.println("Translator (French to English): " + translatedMessage);
+    public void speakEng(String sozler) {
+
+        String translatedsozler = translateFranToEng(sozler);
+        System.out.println("Translator (Fran to Eng): " + translatedsozler);
     }
 
-    private String translateFrenchToEnglish(String message) {
-        if (message.equals("Bonjour tout le monde!")) {
-            return "Hello everyone!";
+    private String translateFranToEng(String sozler) {
+        if (sozler.equals("Bonjour")) {
+            return "Hello";
         }
-        return "[Translation not available for: " + message + "]";
+        return "error";
     }
 }
 
-// Adapter for Spanish Speaker
-class SpanishToEnglishAdapter implements EnglishSpeaker {
-    private SpanishSpeaker spanishSpeaker;
-
-    public SpanishToEnglishAdapter(SpanishSpeaker spanishSpeaker) {
-        this.spanishSpeaker = spanishSpeaker;
+class IspToEngCevir implements EngKonus {
+    public IspToEngCevir(IspKonus IspKonus) {
     }
 
-    @Override
-    public void speakEnglish(String message) {
-        // Translate from Spanish to English
-        String translatedMessage = translateSpanishToEnglish(message);
-        System.out.println("Translator (Spanish to English): " + translatedMessage);
+    public void speakEng(String sozler) {
+
+        String translatedsozler = translateIspToEng(sozler);
+        System.out.println("Translator (Isp to Eng): " + translatedsozler);
     }
 
-    private String translateSpanishToEnglish(String message) {
-        if (message.equals("Hola a todos!")) {
-            return "Hello everyone!";
+    private String translateIspToEng(String sozler) {
+        if (sozler.equals("Hola")) {
+            return "Hello";
         }
-        return "[Translation not available for: " + message + "]";
+        return "error";
     }
 }
 
-// Step 4: Client Class (Conference Application)
-class ConferenceApp {
-    private EnglishSpeaker speaker;
+class Konferans {
+    private EngKonus Konus;
 
-    public void setSpeaker(EnglishSpeaker speaker) {
-        this.speaker = speaker;
+    public void CeviriAyar(EngKonus Konus) {
+        this.Konus = Konus;
     }
 
-    public void displayMessage(String message) {
-        if (speaker != null) {
-            speaker.speakEnglish(message);
+    public void cevir(String sozler) {
+        if (Konus != null) {
+            Konus.speakEng(sozler);
         } else {
-            System.out.println("No speaker is available.");
+            System.out.println("error");
         }
     }
 }
 
-// Step 5: Testing the Adapter Pattern
 public class Adapter {
     public static void main(String[] args) {
-        ConferenceApp conferenceApp = new ConferenceApp();
+        Konferans Konferans = new Konferans();
 
-        // Using a French Speaker
-        FrenchSpeaker frenchSpeaker = new FrenchSpeaker();
-        EnglishSpeaker frenchAdapter = new FrenchToEnglishAdapter(frenchSpeaker);
-        conferenceApp.setSpeaker(frenchAdapter);
-        conferenceApp.displayMessage("Bonjour tout le monde!");
+        FranKonus FranKonus = new FranKonus();
+        EngKonus FranCevir = new FranToEngCevir(FranKonus);
+        Konferans.CeviriAyar(FranCevir);
+        Konferans.cevir("Bonjour");
 
-        // Using a Spanish Speaker
-        SpanishSpeaker spanishSpeaker = new SpanishSpeaker();
-        EnglishSpeaker spanishAdapter = new SpanishToEnglishAdapter(spanishSpeaker);
-        conferenceApp.setSpeaker(spanishAdapter);
-        conferenceApp.displayMessage("Hola a todos!");
+        IspKonus IspKonus = new IspKonus();
+        EngKonus IspCevir = new IspToEngCevir(IspKonus);
+        Konferans.CeviriAyar(IspCevir);
+        Konferans.cevir("Hola");
     }
 }
